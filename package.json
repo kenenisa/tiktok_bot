@@ -4,9 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "chromedriver": "^104.0.0",
+    "ffmpeg": "^0.0.4",
+    "node-fetch": "^2.6.7",
+    "selenium-webdriver": "^4.4.0",
+    "sharp": "^0.30.7"
+  }
 }

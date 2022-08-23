@@ -1,0 +1,4 @@
+/node_modules
+/out
+/assets
+package-lock.json
