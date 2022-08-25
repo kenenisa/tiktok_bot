@@ -35,7 +35,6 @@ module.exports = (post,resolve) => {
           .extract({ left: 0, top: 0, width: con.width - 16, height: con.height - 85 })
           .toFile(finalImage)
           .finally(async () => {
-            console.log("shit")
             await deleteFile(imagePath)
             resolve(finalImage)
           })
