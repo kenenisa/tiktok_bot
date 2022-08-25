@@ -5,10 +5,12 @@ const prepareVideo = require("./util/prepareVideo.js");
 const takeScreenshot = require("./util/takeScreenshot.js");
 const rand = new Date().toDateString().replace(/\s/g, "-") + new Date().getTime()
 const getAudio = require("./util/getAudio.js");
+const opacity = require("./util/opacity.js");
 
 const args = process.argv.slice(2);
 
 const merged = rand + 'su';
+const overlay = rand + 'ol';
 const final = rand + 'final';
 
 const config = {
@@ -16,8 +18,10 @@ const config = {
     full_video: `./out/${args[0]}.mp4`,
     temp: `./out/temp/${rand}.mp4`,
     merged: `./out/final/${merged}.mp4`,
+    overlay: `./out/final/${overlay}.mp4`,
     final: `./out/final/${final}.mp4`,
-    ventPost: args[1]
+    music: `./assets/music/${args[1]}.mp3`,
+    ventPost: args[2],
 }
 const audioText = `
 Take a guess what I wish for us if we had a SECOND chance. The first one wasn't really a chance but it Alright. 
@@ -62,12 +66,18 @@ const overlayAudio = (resolve) => {
             resolve()
         }).catch(console.log)
 }
-
+const overlayMusic = (resolve) => {
+    command(`ffmpeg -i ${config.merged} -i ${config.music} -filter_complex "[1:a]volume=0.20,apad[A];[0:a][A]amerge[out]" -c:v copy -map 0:v -map [out] -y ${config.overlay}`)
+        .then(() => {
+            console.log("Music Added!")
+            resolve()
+        }).catch(console.log)
+}
 const addImage = (imagePath, resolve) => {
     try {
 
-        new ffmpeg(config.merged, (err, video) => {
-            console.log("proccessing image watermark");
+        new ffmpeg(config.overlay, (err, video) => {
+            console.log("processing image watermark");
             video.fnAddWatermark(imagePath, config.final, {
                 position: 'C'
             }, async function (error, file) {
@@ -75,6 +85,7 @@ const addImage = (imagePath, resolve) => {
                     console.log('New video file: ' + file);
                 await deleteFile(imagePath);
                 await deleteFile(config.merged);
+                await deleteFile(config.overlay);
                 resolve();
             });
 
@@ -90,7 +101,6 @@ const prepare = args[0] === "prepare" ? true : false;
     } else {
         try {
             getAudioInfo((audioDuration) => {
-                console.log("sup fam");
                 getVideoInfo(audioDuration, (starting, video) => {
                     cutVideo(starting, video, audioDuration, () => {
                         overlayAudio(async () => {
@@ -98,13 +108,18 @@ const prepare = args[0] === "prepare" ? true : false;
                             await deleteFile(config.audio);
                             console.log("deleted temp");
                             console.log("Overlay! -> ", config.merged);
-                            takeScreenshot(config.ventPost, (imagePath) => {
-                                addImage(imagePath, () => {
-                                    console.log("Cleaned up");
-                                    console.log("DONE!");
-                                    process.exit();
-                                })
-                            });
+                            overlayMusic(() => {
+                                takeScreenshot(config.ventPost, (imagePath) => {
+                                    opacity(imagePath, 0.6, imgPath => {
+                                        console.log('Edited image');
+                                        addImage(imgPath, () => {
+                                            console.log("Cleaned up");
+                                            console.log("DONE!");
+                                            process.exit();
+                                        })
+                                    })
+                                });
+                            })
                         })
                     })
                 })
