@@ -1,4 +1,7 @@
 /node_modules
-/out
-/assets
+/out/final/*
+/out/videos/*
+/out/temp/*
+/assets/music/*
+/assets/*.mp4
 package-lock.json

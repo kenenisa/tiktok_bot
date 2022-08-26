@@ -15,7 +15,7 @@ const final = rand + 'final';
 
 const config = {
     audio: ``,
-    full_video: `./out/${args[0]}.mp4`,
+    full_video: `./out/videos/${args[0]}.mp4`,
     temp: `./out/temp/${rand}.mp4`,
     merged: `./out/final/${merged}.mp4`,
     overlay: `./out/final/${overlay}.mp4`,
