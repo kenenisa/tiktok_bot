@@ -110,7 +110,7 @@ const prepare = args[0] === "prepare" ? true : false;
                             console.log("Overlay! -> ", config.merged);
                             overlayMusic(() => {
                                 takeScreenshot(config.ventPost, (imagePath) => {
-                                    opacity(imagePath, 0.6, imgPath => {
+                                    opacity(imagePath, 0.7, imgPath => {
                                         console.log('Edited image');
                                         addImage(imgPath, () => {
                                             console.log("Cleaned up");
