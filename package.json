@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "prepare": "node index.js prepare",
+    "bootstrap": "node index.js bootstrap"
   },
   "keywords": [],
   "author": "",

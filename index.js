@@ -12,10 +12,15 @@ const getTextFromTelegram = require("./util/getTextFromTelegram.js");
 
 const args = process.argv.slice(2);
 
+if(!args[0]){
+    console.log("No arguments provided! Exiting...");
+    process.exit()
+}
 if(args[0] === "bootstrap"){
     console.log("Project was bootstrapped successfully!");
     process.exit()
 }
+
 
 const merged = rand + 'su';
 const overlay = rand + 'ol';
@@ -30,6 +35,11 @@ const config = {
     final: `./out/final/${final}.mp4`,
     music: `./assets/music/${args[1]}.mp3`,
     ventPost: args[2],
+}
+
+if(!fs.existsSync(config.full_video) || !fs.existsSync(config.music)){
+    console.log(`${config.full_video} or ${config.mnusic} do not seem to exist! Exiting...`);
+    process.exit();
 }
 
 const getAudioInfo = async (resolve) => {
