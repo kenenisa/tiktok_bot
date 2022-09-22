@@ -1,5 +1,6 @@
 const ffmpeg = require("ffmpeg")
 require('dotenv').config()
+require("./bootstrap.js")
 const command = require("./util/command.js");
 const deleteFile = require("./util/deleteFile.js");
 const prepareVideo = require("./util/prepareVideo.js");
@@ -10,6 +11,11 @@ const opacity = require("./util/opacity.js");
 const getTextFromTelegram = require("./util/getTextFromTelegram.js");
 
 const args = process.argv.slice(2);
+
+if(args[0] === "bootstrap"){
+    console.log("Project was bootstrapped successfully!");
+    process.exit()
+}
 
 const merged = rand + 'su';
 const overlay = rand + 'ol';
