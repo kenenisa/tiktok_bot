@@ -1,4 +1,5 @@
 const ffmpeg = require("ffmpeg")
+require('dotenv').config()
 const command = require("./util/command.js");
 const deleteFile = require("./util/deleteFile.js");
 const prepareVideo = require("./util/prepareVideo.js");
@@ -6,6 +7,7 @@ const takeScreenshot = require("./util/takeScreenshot.js");
 const rand = new Date().toDateString().replace(/\s/g, "-") + new Date().getTime()
 const getAudio = require("./util/getAudio.js");
 const opacity = require("./util/opacity.js");
+const getTextFromTelegram = require("./util/getTextFromTelegram.js");
 
 const args = process.argv.slice(2);
 
@@ -15,7 +17,7 @@ const final = rand + 'final';
 
 const config = {
     audio: ``,
-    full_video: `./out/videos/${args[0]}.mp4`,
+    full_video: `./out/${args[0]}.mp4`,
     temp: `./out/temp/${rand}.mp4`,
     merged: `./out/final/${merged}.mp4`,
     overlay: `./out/final/${overlay}.mp4`,
@@ -23,14 +25,9 @@ const config = {
     music: `./assets/music/${args[1]}.mp3`,
     ventPost: args[2],
 }
-const audioText = `
-Take a guess what I wish for us if we had a SECOND chance. The first one wasn't really a chance but it Alright. 
-I see us living in downtown Europe or U.S.A., I want to take you for a walk on a cold Christmas, holding hands while we use the other hand to hold ice cream, talking only about us, wearing a big black for me and white coat, staring at each other's eyes and the light. 
 
-But I can't keep that high hope, I'll let time run it, if it really means it'll come to us, and we'll try our given chance.`
-
-const getAudioInfo = (resolve) => {
-    getAudio(audioText, (audioPath) => {
+const getAudioInfo = async (resolve) => {
+    getAudio(await getTextFromTelegram(config.ventPost), (audioPath) => {
         config.audio = audioPath
         console.log(audioPath, "is here");
         new ffmpeg(config.audio, (err, audio) => {
@@ -109,8 +106,8 @@ const prepare = args[0] === "prepare" ? true : false;
                             console.log("deleted temp");
                             console.log("Overlay! -> ", config.merged);
                             overlayMusic(() => {
-                                takeScreenshot(config.ventPost, (imagePath) => {
-                                    opacity(imagePath, 0.7, imgPath => {
+                                takeScreenshot(config.ventPost, video.metadata.video.resolution, (imagePath) => {
+                                    opacity(imagePath, 0.6, imgPath => {
                                         console.log('Edited image');
                                         addImage(imgPath, () => {
                                             console.log("Cleaned up");

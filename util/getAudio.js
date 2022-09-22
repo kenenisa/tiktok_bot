@@ -44,6 +44,7 @@ function audioGet(url, options, resolve) {
   fetch(url, options)
     .then(res => res.json())
     .then(get => {
+      console.log({get});
       if (get.status !== 'success') {
         setTimeout(() => audioGet(url, options), 10 * 1000)
       } else {
@@ -65,6 +66,7 @@ module.exports = (text, resolve) => {
     .then(res => res.json())
     // .then(console.log)
     .then(post => {
+      console.log({post});
       url += '?id=' + post.id
       options.method = "GET"
       options.body = undefined

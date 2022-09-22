@@ -10,11 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chromedriver": "^104.0.0",
+    "dotenv": "^16.0.2",
     "ffmpeg": "^0.0.4",
     "jimp": "^0.16.1",
     "node-fetch": "^2.6.7",
     "selenium-webdriver": "^4.4.0",
     "sharp": "^0.30.7"
+  },
+  "devDependencies": {
+    "chromedriver": "^105.0.1"
   }
 }

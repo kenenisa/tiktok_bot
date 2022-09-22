@@ -1,7 +1,10 @@
-/node_modules
-/out/final/*
-/out/videos/*
-/out/temp/*
-/assets/music/*
-/assets/*.mp4
+node_modules
+out/final/*
+out/videos/*
+out/temp/*
+out/*.mp4
+assets/music/*
+assets/*.mp4
 package-lock.json
+.env
+.DS_Store
