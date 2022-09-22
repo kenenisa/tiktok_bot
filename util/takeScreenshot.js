@@ -27,7 +27,7 @@ const html = id => `
         left:-16px;
     }
 </style>
-<script async src="https://telegram.org/js/telegram-widget.js?19" data-telegram-post="testtestte13/${id}" data-width="375" data-userpic="false"></script>
+<script async src="https://telegram.org/js/telegram-widget.js?19" data-telegram-post="${process.env.telegram_public_channel}/${id}" data-width="375" data-userpic="false"></script>
 </body>
 </html>
 `;
@@ -53,7 +53,7 @@ module.exports = (post, resolution, resolve) => {
           return [window.innerWidth, window.innerHeight]
         })
         console.log({ window });
-        const el = await driver.findElement({ id: 'telegram-post-testtestte13-' + post })
+        const el = await driver.findElement({ id: `telegram-post-${process.env.telegram_public_channel}-${post}` })
         const con = await el.getRect()
         const block = [con.width - 16, con.height - 85]
         console.log({ block });
@@ -68,7 +68,7 @@ module.exports = (post, resolution, resolve) => {
         const dimensions = [(metadata.width * block[0]) / window[0], (metadata.height * block[1]) / window[1]].map(e => Math.floor(e))
         console.log({ dimensions });
         sharpImage.extract({ left: 0, top: 0, width: dimensions[0], height: dimensions[1] })
-          .resize({ width: Math.floor(resolution.w * 0.7) })
+          .resize({ width: Math.floor(resolution.w * Number(process.env.text_screenshot_size)) })
           .toFile(finalImage)
           .finally(async () => {
             // await deleteFile(imagePath)

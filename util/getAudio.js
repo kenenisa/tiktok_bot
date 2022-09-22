@@ -9,7 +9,7 @@ let options = {
   method: 'POST',
   headers: {
     'content-type': 'application/json',
-    'X-RapidAPI-Key': 'ed7866a312msh0bafdc03242c636p1dd977jsn1836849ee767',
+    'X-RapidAPI-Key': process.env.llts_api_key,
     'X-RapidAPI-Host': 'large-text-to-speech.p.rapidapi.com'
   },
   body: '{"text":""}'

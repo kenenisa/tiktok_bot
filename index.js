@@ -49,7 +49,7 @@ const getVideoInfo = (audioDuration, resolve) => {
 
 const cutVideo = (starting, video, audioDuration, resolve) => {
     video.setVideoStartTime(starting)
-        .setVideoDuration(audioDuration + 1)
+        .setVideoDuration(audioDuration + 2)
         .save(config.temp, (err) => {
             if (err) return console.log(err);
             console.log('video clipped');
@@ -64,7 +64,7 @@ const overlayAudio = (resolve) => {
         }).catch(console.log)
 }
 const overlayMusic = (resolve) => {
-    command(`ffmpeg -i ${config.merged} -i ${config.music} -filter_complex "[1:a]volume=0.20,apad[A];[0:a][A]amerge[out]" -c:v copy -map 0:v -map [out] -y ${config.overlay}`)
+    command(`ffmpeg -i ${config.merged} -i ${config.music} -filter_complex "[1:a]volume=${process.env.background_music_volume},apad[A];[0:a][A]amerge[out]" -c:v copy -map 0:v -map [out] -y ${config.overlay}`)
         .then(() => {
             console.log("Music Added!")
             resolve()
@@ -76,7 +76,7 @@ const addImage = (imagePath, resolve) => {
         new ffmpeg(config.overlay, (err, video) => {
             console.log("processing image watermark");
             video.fnAddWatermark(imagePath, config.final, {
-                position: 'C'
+                position: process.env.text_screenshot_position
             }, async function (error, file) {
                 if (!error)
                     console.log('New video file: ' + file);
@@ -107,7 +107,7 @@ const prepare = args[0] === "prepare" ? true : false;
                             console.log("Overlay! -> ", config.merged);
                             overlayMusic(() => {
                                 takeScreenshot(config.ventPost, video.metadata.video.resolution, (imagePath) => {
-                                    opacity(imagePath, 0.6, imgPath => {
+                                    opacity(imagePath, Number(process.env.text_screenshot_opacity), imgPath => {
                                         console.log('Edited image');
                                         addImage(imgPath, () => {
                                             console.log("Cleaned up");

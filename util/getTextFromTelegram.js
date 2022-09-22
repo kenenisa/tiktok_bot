@@ -1,7 +1,7 @@
 const { default: fetch } = require("node-fetch")
 
 module.exports = (id) => {
-  return fetch("https://t.me/testtestte13/" + id).then(e => e.text()).then(e => {
+  return fetch(`https://t.me/${process.env.telegram_public_channel}/` + id).then(e => e.text()).then(e => {
     return parseVent(escapeHTML(e.split('<meta property="og:description" content="')[1].split('">')[0]))
   })
 }
