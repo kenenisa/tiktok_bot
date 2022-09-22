@@ -43,31 +43,31 @@ Here are the things you need to do to get started with the bot...
 Project folder structure so you can better understand what each part of the bot does.
 
 ```
-tiktok_bot
-│   README.md (this file lol)
-│   index.js (the entry to the program)   
-│   bootstrap.js (creates missing files and dir for the project)    
-│   .env (doesn't exist on the repo so you need to create it yourself)   
-│   .package.json (defines dependencies)   
+📂 tiktok_bot
+│   📄 README.md (this file lol)
+│   📄 index.js (the entry to the program)   
+│   📄 bootstrap.js (creates missing files and dir for the project)    
+│   📄 .env (doesn't exist on the repo so you need to create it yourself)   
+│   📄 .package.json (defines dependencies)   
 │
-└───assets (created upon project bootstrap)
+└───📂 assets (created upon project bootstrap)
 │   │
-│   └───music (all music should be stored here)
+│   └───📁 music (all music should be stored here)
 |
-└───out (created upon project bootstrap)
+└───📂 out (created upon project bootstrap)
 │   │
-│   └───final (final products will be stored here)
+│   └───📁 final (final products will be stored here)
 |   |
-│   └───temp (temporary files used by the program)
+│   └───📁 temp (temporary files used by the program)
 │   
-└───util
-    │   command.js (used to execute cmd tools)
-    │   deleteFile.js (deletes files that are no longer needed)
-    │   getAudio.js (produces audio from external audio)
-    │   getTextFromTelegram.js (text content from telegram channel)
-    │   opacity.js (applies opacity to content screenshot)
-    │   prepareVideo.js (used to prepare normal videos for processing )
-    │   takeScreenshot.js (takes screenshot of content using chrome)
+└───📂 util
+    │   📄 command.js (used to execute cmd tools)
+    │   📄 deleteFile.js (deletes files that are no longer needed)
+    │   📄 getAudio.js (produces audio from external audio)
+    │   📄 getTextFromTelegram.js (text content from telegram channel)
+    │   📄 opacity.js (applies opacity to content screenshot)
+    │   📄 prepareVideo.js (used to prepare normal videos for processing )
+    │   📄 takeScreenshot.js (takes screenshot of content using chrome)
 ```
 
 ---
@@ -76,7 +76,7 @@ tiktok_bot
 
 ### Bootstrap 🏁
 
-> `npm run bootstrap` or `node index.js bootstrap`
+> **`npm run bootstrap`** or **`node index.js bootstrap`**
 
 No arguments.
 
@@ -84,7 +84,7 @@ This will create the necessary folders for the bot. These folders can actually b
 
 ### Prepare 🛠
 
-> `npm run prepare ARGUMENT_VIDEO_NAME` or `node index.js prepare ARGUMENT_VIDEO_NAME`
+> **`npm run prepare ARGUMENT_VIDEO_NAME`** or **`node index.js prepare ARGUMENT_VIDEO_NAME`**
 
 | Arguments | Purpose |
 | --- | --- |
@@ -94,7 +94,7 @@ This will create a new video in side `out` folder. the purpose of this command i
 
 ### Production 🏗
 
-> `npm start VIDEO_NAME MUSIC_NAME POST_ID` or `node index.js VIDEO_NAME MUSIC_NAME POST_ID`
+> **`npm start VIDEO_NAME MUSIC_NAME POST_ID`** or **`node index.js VIDEO_NAME MUSIC_NAME POST_ID`**
 
 | Arguments | Purpose |
 | --- | --- |
